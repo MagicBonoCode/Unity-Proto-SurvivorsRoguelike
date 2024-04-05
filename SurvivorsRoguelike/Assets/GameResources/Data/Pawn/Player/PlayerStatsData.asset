@@ -15,5 +15,5 @@ MonoBehaviour:
   dataArray:
   - _level: 1
     _damage: 1
-    _maxHp: 100
+    _maxHp: 5
     _speed: 8

@@ -13,6 +13,7 @@ public class NormalMonster : BaseMonster
         Managers.Object.Spawn<Gem>(transform.position);
         StartCoroutine(CRemoveBody());
     }
+
     private IEnumerator CRemoveBody()
     {
         yield return new WaitForSeconds(_bodyRemovalDelay);

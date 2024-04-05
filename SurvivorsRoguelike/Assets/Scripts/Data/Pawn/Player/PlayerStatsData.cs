@@ -27,7 +27,6 @@ public class PlayerStatsData : ScriptableObject
     }
 }
 
-
 [System.Serializable]
 public class PlayerStats
 {

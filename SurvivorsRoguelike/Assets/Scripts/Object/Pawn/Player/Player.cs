@@ -32,9 +32,10 @@ public class Player : BasePawn
 
         PawnSpriteRenderer.sortingOrder = (int)Define.SpriteSortingOrder.Player;
         PawnState = Define.PawnState.Idle;
+        
         // TODO : юс╫ц
-        //Managers.Skill.AddSkill<BulletSkill>(transform.position);
-        //Managers.Skill.AddSkill<SwordSkill>(transform.position);
+        Managers.Skill.AddSkill<BulletSkill>(transform.position);
+        Managers.Skill.AddSkill<SwordSkill>(transform.position);
 
         // Stats Setting
         Damage = Managers.Data.PlayerStatsDictionary[Level].Damage;
@@ -165,5 +166,14 @@ public class Player : BasePawn
     public override void OnDamaged(GameObject attacker, int damage)
     {
         base.OnDamaged(attacker, damage);
+
+        Managers.Event.TriggerEvent("OnPlayerHit");
+    }
+
+    protected override void OnDead()
+    {
+        base.OnDead();
+
+        Managers.Skill.StopSkills();
     }
 }
