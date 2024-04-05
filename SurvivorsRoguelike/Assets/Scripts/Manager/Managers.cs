@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -62,7 +64,6 @@ public class Managers : MonoBehaviour
             s_instance = gameObject.GetComponent<Managers>();
 
             // Core
-            s_instance._data.Init();
             s_instance._pool.Init();
             s_instance._event.Init();
         }

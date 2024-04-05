@@ -6,7 +6,7 @@ public class MapTile : MonoBehaviour
 {
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag != "Area")
+        if (collision.tag != "Area" || Managers.Object.Player.PawnState == Define.PawnState.Dead)
         {
             return;
         }

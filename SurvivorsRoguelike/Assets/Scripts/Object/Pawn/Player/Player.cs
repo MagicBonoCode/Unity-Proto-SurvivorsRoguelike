@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class Player : BasePawn
@@ -9,16 +10,19 @@ public class Player : BasePawn
     public Transform Indicator { get { return _indicator; } }
 
     private float _gemCollectDistance = 1.0f;
+    private float _collisionDamageDelay = 0.5f;
+    private float _collisionDamageCooldown = 0.0f;
 
     protected override bool Init()
     {
         if (base.Init() == false)
-        { 
+        {
             return false;
         }
 
         ObjectType = Define.ObjectType.Player;
-        
+        Level = 1;
+
         return true;
     }
 
@@ -27,13 +31,17 @@ public class Player : BasePawn
         base.OnEnableObject();
 
         PawnSpriteRenderer.sortingOrder = (int)Define.SpriteSortingOrder.Player;
-
         PawnState = Define.PawnState.Idle;
-
         // TODO : юс╫ц
-        Managers.Skill.AddSkill<BulletSkill>(transform.position);
-        Managers.Skill.AddSkill<SwordSkill>(transform.position);
-        Speed = 6.0f;
+        //Managers.Skill.AddSkill<BulletSkill>(transform.position);
+        //Managers.Skill.AddSkill<SwordSkill>(transform.position);
+
+        // Stats Setting
+        Damage = Managers.Data.PlayerStatsDictionary[Level].Damage;
+        MaxHp = Managers.Data.PlayerStatsDictionary[Level].MaxHp;
+        Speed = Managers.Data.PlayerStatsDictionary[Level].Speed;
+
+        Hp = MaxHp;
     }
 
     protected override void FadeAnimation()
@@ -58,15 +66,24 @@ public class Player : BasePawn
     {
         base.UpdateController();
 
-        InputKey();
-        CollectGem();
+        if (PawnState != Define.PawnState.Dead)
+        {
+            InputKey();
+            CollectGem();
+
+            // OnCollisionStay2D Damage Timer
+            _collisionDamageCooldown = Mathf.Clamp(_collisionDamageCooldown += Time.deltaTime, 0.0f, _collisionDamageDelay);
+        }
     }
 
     protected override void FixedUpdateController()
     {
         base.FixedUpdateController();
 
-        MovePlayer();
+        if (PawnState != Define.PawnState.Dead)
+        {
+            MovePlayer();
+        }
     }
 
     protected override void LateUpdateController()
@@ -122,5 +139,31 @@ public class Player : BasePawn
                 Managers.Object.Despawn(gem);
             }
         }
+    }
+
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag != "Monster")
+        {
+            return;
+        }
+
+        BaseMonster monster = collision.gameObject.GetComponent<BaseMonster>();
+        if (monster == null && monster.PawnState == Define.PawnState.Dead)
+        {
+            return;
+        }
+
+        if (_collisionDamageCooldown >= _collisionDamageDelay)
+        {
+            OnDamaged(monster.gameObject, monster.Damage);
+            _collisionDamageCooldown = 0.0f;
+        }
+    }
+
+    public override void OnDamaged(GameObject attacker, int damage)
+    {
+        base.OnDamaged(attacker, damage);
     }
 }

@@ -23,6 +23,13 @@ public abstract class BaseObject : MonoBehaviour
         _init = true;
         return true;
     }
+    
+    private void OnEnable()
+    {
+        OnEnableObject();
+    }
+
+    protected virtual void OnEnableObject() { }
 
     private void Start()
     {
@@ -30,13 +37,6 @@ public abstract class BaseObject : MonoBehaviour
     }
 
     protected virtual void StartObject() { }
-
-    private void OnEnable()
-    {
-        OnEnableObject();
-    }
-
-    protected virtual void OnEnableObject() { }
 
     private void Update()
     {

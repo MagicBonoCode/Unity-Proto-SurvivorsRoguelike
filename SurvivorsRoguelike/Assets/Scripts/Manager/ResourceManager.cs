@@ -22,7 +22,7 @@ public class ResourceManager
 
         string loadKey = key;
         if (key.Contains(".sprite"))
-        { 
+        {
             loadKey = $"{key}[{key.Replace(".sprite", "")}]";
         }
 
@@ -66,7 +66,7 @@ public class ResourceManager
         }
 
         if (_resources.TryGetValue(key, out UnityEngine.Object resource))
-        { 
+        {
             return resource as T;
         }
 
@@ -84,7 +84,7 @@ public class ResourceManager
         }
 
         if (prefab.GetComponent<Poolable>() != null)
-        { 
+        {
             return Managers.Pool.Pop(prefab, parent).gameObject;
         }
 
@@ -96,7 +96,7 @@ public class ResourceManager
     public void Destroy(GameObject gameObject)
     {
         if (gameObject == null)
-        { 
+        {
             Debug.LogError($"삭제할 {gameObject.name} 가 없습니다.");
             return;
         }

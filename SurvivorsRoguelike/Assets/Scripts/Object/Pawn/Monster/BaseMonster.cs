@@ -16,6 +16,7 @@ public abstract class BaseMonster : BasePawn
         }
 
         ObjectType = Define.ObjectType.Monster;
+        Level = 1;
 
         return true;
     }
@@ -25,12 +26,14 @@ public abstract class BaseMonster : BasePawn
         base.OnEnableObject();
 
         PawnSpriteRenderer.sortingOrder = (int)Define.SpriteSortingOrder.Monster;
-
         PawnState = Define.PawnState.Moving;
 
-        // TODO : 임시
-        Hp = 3;
-        Speed = 4.0f;
+        // Stats Setting
+        Damage = Managers.Data.MonsterStatsDictionary[Level].Damage;
+        MaxHp = Managers.Data.MonsterStatsDictionary[Level].MaxHp;
+        Speed = Managers.Data.MonsterStatsDictionary[Level].Speed;
+
+        Hp = MaxHp;
     }
 
     protected override void FadeAnimation()
@@ -124,7 +127,7 @@ public abstract class BaseMonster : BasePawn
 
     private IEnumerator CKnockBack(GameObject attacker)
     {
-        yield return new WaitForFixedUpdate(); // 다음 하나의 물리 프레임 딜레이.
+        yield return new WaitForFixedUpdate(); // 다음 하나의 물리 프레임 딜레이
         Vector2 pushDir = (transform.position - attacker.transform.position).normalized;
         PawnRigidbody2D.AddForce(pushDir * _pushForce, ForceMode2D.Impulse);
     }

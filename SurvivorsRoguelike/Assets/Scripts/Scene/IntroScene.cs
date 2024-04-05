@@ -28,6 +28,8 @@ public class IntroScene : BaseScene
 
             if (count == totalCount)
             {
+                Managers.Data.Init();
+
                 Object eventSystem = GameObject.FindObjectOfType(typeof(EventSystem));
                 if (eventSystem == null)
                 {
