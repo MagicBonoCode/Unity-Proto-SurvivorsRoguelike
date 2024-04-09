@@ -17,12 +17,6 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: da66626e807a7f94e93c5fb1eae566ce
   m_SerializeEntries:
-  - m_GUID: da00c297a0248d146a11a11b14e4fc0b
-    m_Address: EventSystem.prefab
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PreLoad
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c34f649d0e543f345850ee18d5204051
     m_Address: Grid.prefab
     m_ReadOnly: 0
@@ -61,6 +55,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7be23fff85a2c4344a68d2716054687a
     m_Address: Gem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2e6bb757e623a0e468c715ea5fcb1f93
+    m_Address: EventSystem.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

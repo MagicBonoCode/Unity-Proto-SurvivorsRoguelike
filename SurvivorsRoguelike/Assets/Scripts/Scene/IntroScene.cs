@@ -28,8 +28,6 @@ public class IntroScene : BaseScene
 
             if (count == totalCount)
             {
-                Managers.Data.Init();
-
                 Object eventSystem = GameObject.FindObjectOfType(typeof(EventSystem));
                 if (eventSystem == null)
                 {
@@ -38,7 +36,12 @@ public class IntroScene : BaseScene
                     DontDestroyOnLoad(eventSystem);
                 }
 
-                Managers.Scene.LoadScene(Define.Scene.GameScene);
+                // Core
+                Managers.Data.Init();
+                Managers.Pool.Init();
+                Managers.Event.Init();
+
+                Managers.UI.ShowSceneUI<UI_IntroScene>();
             }
         });
     }

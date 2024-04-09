@@ -45,10 +45,6 @@ public class Managers : MonoBehaviour
         Init();
     }
 
-    private void Update()
-    {
-    }
-
     private static void Init()
     {
         if (s_instance == null)
@@ -59,15 +55,16 @@ public class Managers : MonoBehaviour
                 gameObject = new GameObject { name = "_Managers" };
                 gameObject.AddComponent<Managers>();
             }
-
+            
             DontDestroyOnLoad(gameObject);
             s_instance = gameObject.GetComponent<Managers>();
-
-            // Core
-            s_instance._pool.Init();
-            s_instance._event.Init();
         }
     }
+
+    //private void OnDestroy()
+    //{
+    //    Clear();
+    //}
 
     public static void Clear()
     {

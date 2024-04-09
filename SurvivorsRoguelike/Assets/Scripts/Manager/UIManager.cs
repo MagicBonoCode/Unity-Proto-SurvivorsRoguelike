@@ -73,7 +73,7 @@ public class UIManager
         return popup;
     }
 
-    public T MakeSubItem<T>(Transform parent = null, string name = null) where T : UI_Base
+    public T MakeSubItem<T>(string name = null, Transform parent = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
         {
@@ -89,7 +89,7 @@ public class UIManager
         return gameObject.GetOrAddComponent<T>();
     }
 
-    public T MakeWorldSpaceUI<T>(Transform parent = null, string name = null) where T : UI_Base
+    public T MakeWorldSpaceUI<T>(string name = null, Transform parent = null) where T : UI_Base
     {
         if (string.IsNullOrEmpty(name))
         {

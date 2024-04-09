@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Diagnostics;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -60,9 +62,9 @@ public abstract class UI_Base : MonoBehaviour
     protected InputField GetInputField(int idx) { return Get<InputField>(idx); }
     protected Slider GetSlider(int idx) { return Get<Slider>(idx); }
 
-    public static void BindEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
+    public static void BindEvent(GameObject gameObejct, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
-        UI_EventHandler eventHandler = go.GetOrAddComponent<UI_EventHandler>();
+        UI_EventHandler eventHandler = gameObejct.GetOrAddComponent<UI_EventHandler>();
 
         switch (type)
         {
