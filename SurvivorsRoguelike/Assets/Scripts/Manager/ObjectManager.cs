@@ -98,24 +98,28 @@ public class ObjectManager
     {
         foreach (var monster in NormalMonsters)
         {
-            Despawn<NormalMonster>(monster);
+            Managers.Resource.Destroy(monster.gameObject);
         }
+        NormalMonsters.Clear();
     }
 
     public void DespawnAllProjectiles()
     {
         foreach (var projectile in Projectiles)
         {
-            Despawn<Projectile>(projectile);
+            Managers.Resource.Destroy(projectile.gameObject);
         }
+        Projectiles.Clear();
     }
 
     public void DespawnAllGems()
     {
         foreach (var gem in Gems)
         {
-            Despawn<Gem>(gem);
+            Managers.Resource.Destroy(gem.gameObject);
+            Managers.Grid.Remove(gem.gameObject);
         }
+        Gems.Clear();
     }
 
     public void Clear()

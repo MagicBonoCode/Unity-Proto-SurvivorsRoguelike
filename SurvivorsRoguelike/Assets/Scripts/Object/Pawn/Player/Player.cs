@@ -37,7 +37,7 @@ public class Player : BasePawn
         Managers.Skill.AddSkill<BulletSkill>(transform.position);
         Managers.Skill.AddSkill<SwordSkill>(transform.position);
 
-        // Stats Setting
+        // Stats setting
         Damage = Managers.Data.PlayerStatsDictionary[Level].Damage;
         MaxHp = Managers.Data.PlayerStatsDictionary[Level].MaxHp;
         Speed = Managers.Data.PlayerStatsDictionary[Level].Speed;
@@ -72,7 +72,7 @@ public class Player : BasePawn
             InputKey();
             CollectGem();
 
-            // OnCollisionStay2D Damage Timer
+            // OnCollisionStay2D Damage timer
             _collisionDamageCooldown = Mathf.Clamp(_collisionDamageCooldown += Time.deltaTime, 0.0f, _collisionDamageDelay);
         }
     }
@@ -175,5 +175,9 @@ public class Player : BasePawn
         base.OnDead();
 
         Managers.Skill.StopSkills();
+        if(Managers.Scene.CurrentScene is GameScene gameScene)
+        {
+            gameScene.OnPlayerDead();
+        }
     }
 }

@@ -27,7 +27,6 @@ public class UI_CharacterSelectPopup : UI_BasePopup
 
     private void OnClickOkButton(PointerEventData data)
     {
-        Debug.Log("A");
         Managers.Scene.LoadScene(Define.Scene.GameScene);
     }
 }

@@ -61,20 +61,16 @@ public class Managers : MonoBehaviour
         }
     }
 
-    //private void OnDestroy()
-    //{
-    //    Clear();
-    //}
-
     public static void Clear()
     {
+        // Core
+        s_instance._object.Clear();
+        s_instance._pool.Clear();
+        s_instance._ui.Clear();
+        s_instance._event.Clear();
+
         // Contents
         s_instance._skill.Clear();
-
-        // Core
-        s_instance._event.Clear();
-        s_instance._pool.Clear();
-        s_instance._object.Clear();
-        s_instance._ui.Clear();
+        s_instance._grid.Clear();
     }
 }

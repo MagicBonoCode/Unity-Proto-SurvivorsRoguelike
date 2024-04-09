@@ -5,7 +5,6 @@ using System.IO;
 using System.Xml.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ResourceManager
 {
@@ -70,7 +69,7 @@ public class ResourceManager
             return resource as T;
         }
 
-        Debug.LogError($"{key}를 로드하지 못했습니다.");
+        Debug.LogError($"Failed to load prefab :{key}");
         return null;
     }
 
@@ -79,7 +78,7 @@ public class ResourceManager
         GameObject prefab = Load<GameObject>($"{key}");
         if (prefab == null)
         {
-            Debug.LogError($"Prefab {key}을 로드하지 못했습니다.");
+            Debug.LogError($"Failed to load prefab : {key}");
             return null;
         }
 
@@ -97,7 +96,7 @@ public class ResourceManager
     {
         if (gameObject == null)
         {
-            Debug.LogError($"삭제할 {gameObject.name} 가 없습니다.");
+            Debug.LogError($"Failed to delete GameObject : {gameObject.name}");
             return;
         }
 

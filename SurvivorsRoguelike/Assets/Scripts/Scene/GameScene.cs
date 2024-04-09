@@ -17,7 +17,7 @@ public class GameScene : BaseScene
         SceneType = Define.Scene.GameScene;
         _level = 1;
 
-        // Stage Info Setting
+        // Stage info setting
         _spawnInterval = Managers.Data.StageInfoDictionary[_level].SpawnInterval;
         _spawnCount = Managers.Data.StageInfoDictionary[_level].SpawnCount;
         _maxMonsterCount = Managers.Data.StageInfoDictionary[_level].MaxMonsterCount;
@@ -50,5 +50,33 @@ public class GameScene : BaseScene
             Vector3 randPos = Util.GenerateMonsterSpawnPosition(Managers.Object.Player.transform.position, 10, 15);
             Managers.Object.Spawn<NormalMonster>(randPos);
         }
+    }
+
+    public void OnPlayerDead()
+    {
+        StopAllCoroutines();
+        StartCoroutine(CPlayGameOverPopup());
+    }
+
+    private IEnumerator CPlayGameOverPopup()
+    {
+        yield return new WaitForSeconds(1.0f); // Popup delay
+        Managers.UI.ShowPopupUI<UI_GameOverPopup>();
+    }
+
+    public void ReplayGame()
+    { 
+        Managers.Object.Clear();
+
+        _level = 1;
+
+        // Stage info setting
+        _spawnInterval = Managers.Data.StageInfoDictionary[_level].SpawnInterval;
+        _spawnCount = Managers.Data.StageInfoDictionary[_level].SpawnCount;
+        _maxMonsterCount = Managers.Data.StageInfoDictionary[_level].MaxMonsterCount;
+
+        Managers.Object.Spawn<Player>(Vector3.zero);
+
+        StartCoroutine(CoUpdateSpawningPool());
     }
 }

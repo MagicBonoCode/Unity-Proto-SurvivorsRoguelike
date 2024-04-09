@@ -73,4 +73,13 @@ public class GridManager
 
         return objects;
     }
+
+    public void Clear()
+    {
+        if (_grid != null)
+        {
+            _cells.Clear();
+            Managers.Resource.Destroy(_grid.gameObject);
+        }
+    }
 }

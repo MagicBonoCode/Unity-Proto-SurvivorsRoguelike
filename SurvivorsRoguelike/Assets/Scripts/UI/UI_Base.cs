@@ -39,7 +39,7 @@ public abstract class UI_Base : MonoBehaviour
 
             if (objects[i] == null)
             {
-                Debug.Log($"({names[i]})바인드 실패.");
+                Debug.LogError($"Failed to Bind : {names[i]})");
             }
         }
     }

@@ -28,7 +28,7 @@ public abstract class BaseMonster : BasePawn
         PawnSpriteRenderer.sortingOrder = (int)Define.SpriteSortingOrder.Monster;
         PawnState = Define.PawnState.Moving;
 
-        // Stats Setting
+        // Stats setting
         Damage = Managers.Data.MonsterStatsDictionary[Level].Damage;
         MaxHp = Managers.Data.MonsterStatsDictionary[Level].MaxHp;
         Speed = Managers.Data.MonsterStatsDictionary[Level].Speed;
@@ -127,7 +127,7 @@ public abstract class BaseMonster : BasePawn
 
     private IEnumerator CKnockBack(GameObject attacker)
     {
-        yield return new WaitForFixedUpdate(); // 다음 하나의 물리 프레임 딜레이
+        yield return new WaitForFixedUpdate(); // Next one physics frame delay
         Vector2 pushDir = (transform.position - attacker.transform.position).normalized;
         PawnRigidbody2D.AddForce(pushDir * _pushForce, ForceMode2D.Impulse);
     }
