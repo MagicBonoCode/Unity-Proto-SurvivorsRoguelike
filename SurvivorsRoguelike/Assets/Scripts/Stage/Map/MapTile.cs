@@ -4,9 +4,44 @@ using UnityEngine;
 
 public class MapTile : MonoBehaviour
 {
+    private Vector3 _defaultPosition;
+
+    private void Awake()
+    {
+        _defaultPosition = transform.position;
+    }
+
+    private void Start()
+    {
+        Managers.Event.RemoveEvent("EvReplayGame", SetDefaultPosition);
+        Managers.Event.AddEvent("EvReplayGame", SetDefaultPosition);
+    }
+
+    private void SetDefaultPosition()
+    {
+        transform.position = _defaultPosition;
+    }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag != "Area" || Managers.Object.Player.PawnState == Define.PawnState.Dead)
+        if (collision.tag != "Area")
+        {
+            return;
+        }
+
+        if (Managers.Object == null)
+        {
+            Debug.Log("B");
+            return;
+        }
+
+        if (Managers.Object.Player == null)
+        {
+            Debug.Log("C");
+            return;
+        }
+
+        if (Managers.Object.Player.PawnState == Define.PawnState.Dead)
         {
             return;
         }
@@ -21,7 +56,7 @@ public class MapTile : MonoBehaviour
             transform.Translate(Vector3.right * dirX * 40);
         }
         else
-        { 
+        {
             transform.Translate(Vector3.up * dirY * 40);
         }
     }

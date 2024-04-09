@@ -122,10 +122,10 @@ public abstract class BaseMonster : BasePawn
         }
 
         PawnAnimator.CrossFade("Hit", 0.1f);
-        StartCoroutine(CKnockBack(attacker));
+        StartCoroutine(CoKnockBack(attacker));
     }
 
-    private IEnumerator CKnockBack(GameObject attacker)
+    private IEnumerator CoKnockBack(GameObject attacker)
     {
         yield return new WaitForFixedUpdate(); // Next one physics frame delay
         Vector2 pushDir = (transform.position - attacker.transform.position).normalized;

@@ -15,9 +15,12 @@ public class GridManager
 
     public void SetGrid()
     {
-        GameObject grid = Managers.Resource.Instantiate("Grid.prefab");
-        grid.transform.position = Vector3.zero;
-        _grid = grid.GetComponent<Grid>();
+        if (_grid == null)
+        { 
+            GameObject grid = Managers.Resource.Instantiate("Grid.prefab");
+            _grid = grid.GetComponent<Grid>();
+        }
+        _grid.transform.position = Vector3.zero;
     }
 
     private Cell GetCell(Vector3Int cellPos)

@@ -63,14 +63,15 @@ public class Managers : MonoBehaviour
 
     public static void Clear()
     {
+        // Contents
+        s_instance._skill.Clear();
+        s_instance._grid.Clear();
+
         // Core
         s_instance._object.Clear();
         s_instance._pool.Clear();
         s_instance._ui.Clear();
         s_instance._event.Clear();
-
-        // Contents
-        s_instance._skill.Clear();
-        s_instance._grid.Clear();
+        s_instance._scene.Clear();
     }
 }

@@ -11,10 +11,10 @@ public class NormalMonster : BaseMonster
         base.OnDead();
 
         Managers.Object.Spawn<Gem>(transform.position);
-        StartCoroutine(CRemoveBody());
+        StartCoroutine(CoRemoveBody());
     }
 
-    private IEnumerator CRemoveBody()
+    private IEnumerator CoRemoveBody()
     {
         yield return new WaitForSeconds(_bodyRemovalDelay);
 

@@ -11,7 +11,7 @@ public abstract class BasePawn : BaseObject
     public float Speed { get; protected set; }
     public Vector2 MoveDir { get; protected set; }
 
-    private Define.PawnState _pawnState = Define.PawnState.None;
+    private Define.PawnState _pawnState = Define.PawnState.Default;
     public Define.PawnState PawnState
     {
         get { return _pawnState; }

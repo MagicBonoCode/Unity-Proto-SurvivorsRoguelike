@@ -1,11 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class GameScene : BaseScene
 {
+    private Define.GameSceneState _state;
+    public Define.GameSceneState State
+    {
+        get { return _state; }
+        set
+        {
+            if (_state == value)
+            {
+                return;
+            }
+
+            _state = value;
+            switch (_state)
+            {
+                case Define.GameSceneState.Play:
+                    StartCoroutine(CoPlayGameScene());
+                    break;
+
+                case Define.GameSceneState.Stop:
+                    break;
+
+                case Define.GameSceneState.PlayerDead:
+                    StartCoroutine(CoPlayGameOverPopup());
+                    break;
+            }
+        }
+    }
+
+    private float _gameTimer = 0.0f;
+    public float GameTimer { get { return _gameTimer; } }
+
     private int _level = 1;
+    private float _spawnTimer = 5.0f;
     private float _spawnInterval = 5.0f;
     private int _spawnCount = 20;
     private int _maxMonsterCount = 100;
@@ -15,25 +46,38 @@ public class GameScene : BaseScene
         base.Init();
 
         SceneType = Define.Scene.GameScene;
-        _level = 1;
 
         // Stage info setting
+        _level = 1;
         _spawnInterval = Managers.Data.StageInfoDictionary[_level].SpawnInterval;
         _spawnCount = Managers.Data.StageInfoDictionary[_level].SpawnCount;
         _maxMonsterCount = Managers.Data.StageInfoDictionary[_level].MaxMonsterCount;
+        _gameTimer = 0.0f;
+        _spawnTimer = _spawnInterval;
 
         Managers.Grid.SetGrid();
         Managers.Object.Spawn<Player>(Vector3.zero);
+        Managers.UI.ShowSceneUI<UI_GameScene>();
 
-        StartCoroutine(CoUpdateSpawningPool());
+        State = Define.GameSceneState.Play;
     }
 
-    private IEnumerator CoUpdateSpawningPool()
+    private IEnumerator CoPlayGameScene()
     {
         while (true)
         {
-            TrySpawn();
-            yield return new WaitForSeconds(_spawnInterval);
+            if (State == Define.GameSceneState.Play)
+            {
+                _gameTimer = Mathf.Clamp(_gameTimer += Time.deltaTime, 0.0f, Mathf.Infinity);
+                _spawnTimer = Mathf.Clamp(_spawnTimer += Time.deltaTime, 0.0f, _spawnInterval);
+                if (_spawnTimer >= _spawnInterval)
+                {
+                    TrySpawn();
+                    _spawnTimer = 0.0f;
+                }
+            }
+
+            yield return null;
         }
     }
 
@@ -52,31 +96,34 @@ public class GameScene : BaseScene
         }
     }
 
-    public void OnPlayerDead()
-    {
-        StopAllCoroutines();
-        StartCoroutine(CPlayGameOverPopup());
-    }
-
-    private IEnumerator CPlayGameOverPopup()
+    private IEnumerator CoPlayGameOverPopup()
     {
         yield return new WaitForSeconds(1.0f); // Popup delay
         Managers.UI.ShowPopupUI<UI_GameOverPopup>();
     }
 
     public void ReplayGame()
-    { 
+    {
         Managers.Object.Clear();
 
-        _level = 1;
-
         // Stage info setting
+        _level = 1;
         _spawnInterval = Managers.Data.StageInfoDictionary[_level].SpawnInterval;
         _spawnCount = Managers.Data.StageInfoDictionary[_level].SpawnCount;
         _maxMonsterCount = Managers.Data.StageInfoDictionary[_level].MaxMonsterCount;
+        _gameTimer = 0.0f;
+        _spawnTimer = 0.0f;
 
         Managers.Object.Spawn<Player>(Vector3.zero);
 
-        StartCoroutine(CoUpdateSpawningPool());
+        State = Define.GameSceneState.Play;
+
+        Managers.Event.TriggerEvent("EvReplayGame");
+    }
+
+    public override void Clear()
+    {
+        base.Clear();
+        StopAllCoroutines();
     }
 }

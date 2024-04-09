@@ -9,6 +9,12 @@ public class Player : BasePawn
     [SerializeField] private Transform _indicator;
     public Transform Indicator { get { return _indicator; } }
 
+    private int _experience;
+    public int EXP { get { return _experience; } }
+
+    private int _maxExperience;
+    public int MaxEXP { get { return _maxExperience; } }
+
     private float _gemCollectDistance = 1.0f;
     private float _collisionDamageDelay = 0.5f;
     private float _collisionDamageCooldown = 0.0f;
@@ -41,8 +47,11 @@ public class Player : BasePawn
         Damage = Managers.Data.PlayerStatsDictionary[Level].Damage;
         MaxHp = Managers.Data.PlayerStatsDictionary[Level].MaxHp;
         Speed = Managers.Data.PlayerStatsDictionary[Level].Speed;
-
         Hp = MaxHp;
+
+        // Exp setting
+        _experience = 0;
+        _maxExperience = 100;
     }
 
     protected override void FadeAnimation()
@@ -138,6 +147,9 @@ public class Player : BasePawn
             if (dir.sqrMagnitude <= sqrCollectDist)
             {
                 Managers.Object.Despawn(gem);
+                
+                _experience++;
+                Managers.Event.TriggerEvent("EvUpdateExp");
             }
         }
     }
@@ -177,7 +189,7 @@ public class Player : BasePawn
         Managers.Skill.StopSkills();
         if(Managers.Scene.CurrentScene is GameScene gameScene)
         {
-            gameScene.OnPlayerDead();
+            gameScene.State = Define.GameSceneState.PlayerDead;
         }
     }
 }

@@ -6,20 +6,28 @@ public static class Define
 {
     public enum Scene
     {
-        None,
+        Default,
         IntroScene,
         GameScene,
     }
 
+    public enum GameSceneState
+    { 
+        Default,
+        Play,
+        Stop,
+        PlayerDead,
+    }
+
     public enum UIEvent
     {
-        None,
+        Default,
         Click,
     }
 
     public enum ObjectType
     {
-        None,
+        Default,
         Player,
         Monster,
         Projectile,
@@ -28,7 +36,7 @@ public static class Define
 
     public enum PawnState
     {
-        None,
+        Default,
         Idle,
         Moving,
         Dead,
@@ -37,7 +45,7 @@ public static class Define
 
     public enum SpriteSortingOrder
     {
-        None,
+        Default,
         Player = 9,
         Monster =10,
     }
