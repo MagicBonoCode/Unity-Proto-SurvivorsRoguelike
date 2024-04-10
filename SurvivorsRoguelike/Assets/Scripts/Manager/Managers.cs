@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -16,6 +14,8 @@ public class Managers : MonoBehaviour
         }
     }
 
+    private static bool s_isQuitting = false;
+
     // Core
     private DataManager _data = new DataManager();
     private EventManager _event = new EventManager();
@@ -25,20 +25,20 @@ public class Managers : MonoBehaviour
     private SceneManagerEx _scene = new SceneManagerEx();
     private UIManager _ui = new UIManager();
 
-    public static DataManager Data { get { return Instance._data; } }
-    public static EventManager Event { get { return Instance._event; } }
-    public static ObjectManager Object { get { return Instance._object; } }
-    public static PoolManager Pool { get { return Instance._pool; } }
-    public static ResourceManager Resource { get { return Instance._resource; } }
-    public static SceneManagerEx Scene { get { return Instance._scene; } }
-    public static UIManager UI { get { return Instance._ui; } }
+    public static DataManager Data { get { return s_isQuitting ? null : Instance._data; } }
+    public static EventManager Event { get { return s_isQuitting ? null : Instance._event; } }
+    public static ObjectManager Object { get { return s_isQuitting ? null : Instance._object; } }
+    public static PoolManager Pool { get { return s_isQuitting ? null : Instance._pool; } }
+    public static ResourceManager Resource { get { return s_isQuitting ? null : Instance._resource; } }
+    public static SceneManagerEx Scene { get { return s_isQuitting ? null : Instance._scene; } }
+    public static UIManager UI { get { return s_isQuitting ? null : Instance._ui; } }
 
     // Contents
     private GridManager _grid = new GridManager();
     private SkillManager _skill = new SkillManager();
 
-    public static GridManager Grid { get { return Instance._grid; } }
-    public static SkillManager Skill { get { return Instance._skill; } }
+    public static GridManager Grid { get { return s_isQuitting ? null : Instance._grid; } }
+    public static SkillManager Skill { get { return s_isQuitting ? null : Instance._skill; } }
 
     private void Start()
     {
@@ -73,5 +73,11 @@ public class Managers : MonoBehaviour
         s_instance._ui.Clear();
         s_instance._event.Clear();
         s_instance._scene.Clear();
+    }
+
+    private void OnApplicationQuit()
+    {
+        s_instance = null;
+        s_isQuitting = true;
     }
 }
