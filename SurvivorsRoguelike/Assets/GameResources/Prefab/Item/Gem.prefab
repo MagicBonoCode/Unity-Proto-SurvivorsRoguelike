@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5972576234102450722}
   - component: {fileID: 4437163323032767540}
+  - component: {fileID: 8560642284074485547}
   - component: {fileID: 8580511128815374409}
   m_Layer: 0
   m_Name: Gem
@@ -85,6 +86,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8560642284074485547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5432926338792292606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3786bb4845600154eb7fe13d2cb56f84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8580511128815374409
 MonoBehaviour:
   m_ObjectHideFlags: 0

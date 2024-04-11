@@ -13,12 +13,12 @@ public class ObjectManager
     public HashSet<Projectile> Projectiles { get; private set; } = new HashSet<Projectile>();
     public HashSet<Gem> Gems { get; } = new HashSet<Gem>();
 
-    public T Spawn<T>(Vector3 position) where T : BaseObject
+    public T Spawn<T>(Vector3 position, Transform parent = null) where T : BaseObject
     {
         Type type = typeof(T);
         if (type == typeof(Player))
         {
-            GameObject gameObject = Managers.Resource.Instantiate("Player.prefab");
+            GameObject gameObject = Managers.Resource.Instantiate("Player.prefab", parent);
             gameObject.transform.position = position;
 
             Player player = gameObject.GetComponent<Player>();
@@ -27,7 +27,7 @@ public class ObjectManager
         }
         else if (type == typeof(NormalMonster))
         {
-            GameObject gameObject = Managers.Resource.Instantiate("Monster.prefab");
+            GameObject gameObject = Managers.Resource.Instantiate("Monster.prefab", parent);
             gameObject.transform.position = position;
 
             NormalMonster normalMonster = gameObject.GetComponent<NormalMonster>();
@@ -36,7 +36,7 @@ public class ObjectManager
         }
         else if (type == typeof(Projectile))
         {
-            GameObject gameObject = Managers.Resource.Instantiate("Bullet.prefab");
+            GameObject gameObject = Managers.Resource.Instantiate("Bullet.prefab", parent);
             gameObject.transform.position = position;
 
             Projectile projectile = gameObject.GetComponent<Projectile>();
@@ -45,7 +45,7 @@ public class ObjectManager
         }
         else if (type == typeof(Gem))
         {
-            GameObject gameObject = Managers.Resource.Instantiate("Gem.prefab");
+            GameObject gameObject = Managers.Resource.Instantiate("Gem.prefab", parent);
             gameObject.transform.position = position;
 
             Gem gem = gameObject.GetComponent<Gem>();

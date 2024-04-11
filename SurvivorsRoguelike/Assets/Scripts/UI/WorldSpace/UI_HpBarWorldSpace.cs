@@ -29,7 +29,6 @@ public class UI_HpBarWorldSpace : UI_Base
         }
 
         float amount = _owner.Hp / (float)_owner.MaxHp;
-        Debug.Log(_owner.Hp+ "/" + _owner.MaxHp);
         _hpBarSlider.value = amount;
     }
 }

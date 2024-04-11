@@ -25,6 +25,9 @@ public class Player : BasePawn
         ObjectType = Define.ObjectType.Player;
         _playerStat = GetComponent<PlayerStats>();
 
+        Managers.Event.RemoveEvent("EvUpdateStageLevel", () => { MaxHp = _playerStat.MaxHp; });
+        Managers.Event.AddEvent("EvUpdateStageLevel", () => { MaxHp = _playerStat.MaxHp; });
+
         return true;
     }
 

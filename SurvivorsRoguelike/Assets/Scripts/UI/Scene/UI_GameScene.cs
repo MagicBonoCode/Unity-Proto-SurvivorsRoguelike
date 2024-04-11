@@ -7,10 +7,6 @@ using UnityEngine.UI;
 
 public class UI_GameScene : UI_BaseScene
 {
-    private enum GameObjects
-    {
-    }
-
     private enum Texts
     {
         Text_Exp,
@@ -30,7 +26,6 @@ public class UI_GameScene : UI_BaseScene
     {
         base.Init();
 
-        Bind<GameObject>(typeof(GameObjects));
         Bind<Text>(typeof(Texts));
         Bind<Slider>(typeof(Sliders));
 

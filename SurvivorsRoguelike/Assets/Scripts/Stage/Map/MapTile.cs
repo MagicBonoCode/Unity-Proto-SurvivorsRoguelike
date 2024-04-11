@@ -30,7 +30,6 @@ public class MapTile : MonoBehaviour
         }
 
         Vector3 dir = collision.transform.position - transform.position;
-
         float dirX = dir.x < 0 ? -1 : 1;
         float dirY = dir.y < 0 ? -1 : 1;
 
