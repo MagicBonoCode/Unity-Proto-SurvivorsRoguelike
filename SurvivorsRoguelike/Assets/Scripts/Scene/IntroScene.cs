@@ -18,8 +18,7 @@ public class IntroScene : BaseScene
     protected override void Init()
     {
         base.Init();
-
-        SceneType = Define.Scene.IntroScene;
+        Managers.Scene.SetCurrentScene(this);
 
         Managers.Resource.LoadAllAsync<Object>("PreLoad", (key, count, totalCount) =>
         {

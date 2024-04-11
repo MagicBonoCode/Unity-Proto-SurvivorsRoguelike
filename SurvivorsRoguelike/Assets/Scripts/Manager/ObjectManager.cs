@@ -90,7 +90,7 @@ public class ObjectManager
     {
         if (Player != null)
         {
-            Despawn<Player>(Player);
+            Despawn(Player);
         }
     }
 

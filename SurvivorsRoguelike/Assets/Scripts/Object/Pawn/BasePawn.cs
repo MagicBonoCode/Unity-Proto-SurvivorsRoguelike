@@ -4,11 +4,7 @@ using UnityEngine;
 
 public abstract class BasePawn : BaseObject
 {
-    public int Level { get; protected set; }
-    public int Damage { get; protected set; }
-    public int MaxHp { get; protected set; }
     public int Hp { get; protected set; }
-    public float Speed { get; protected set; }
     public Vector2 MoveDir { get; protected set; }
 
     private Define.PawnState _pawnState = Define.PawnState.Default;

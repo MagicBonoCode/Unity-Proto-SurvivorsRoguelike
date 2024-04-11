@@ -20,6 +20,7 @@ public class GridManager
             GameObject grid = Managers.Resource.Instantiate("Grid.prefab");
             _grid = grid.GetComponent<Grid>();
         }
+
         _grid.transform.position = Vector3.zero;
     }
 

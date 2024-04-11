@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class NormalMonster : BaseMonster
 {
-    private float _bodyRemovalDelay = 1.0f;
+    private const float BODY_REMOVE_DELAY = 1.0f;
 
     protected override void OnDead()
     {
@@ -16,7 +16,7 @@ public class NormalMonster : BaseMonster
 
     private IEnumerator CoRemoveBody()
     {
-        yield return new WaitForSeconds(_bodyRemovalDelay);
+        yield return new WaitForSeconds(BODY_REMOVE_DELAY);
 
         StopAllCoroutines();
 

@@ -8,8 +8,8 @@ public class PoolManager
     #region Pool
     private class Pool
     {
-        public GameObject Original { get; private set; } = null;
-        public Transform Root { get; private set; } = null;
+        public GameObject Original { get; private set; }
+        public Transform Root { get; private set; }
 
         private Stack<Poolable> _poolStack = new Stack<Poolable>();
 
@@ -65,7 +65,7 @@ public class PoolManager
 
             if (parent == null)
             {
-                poolable.transform.SetParent(Managers.Scene.CurrentScene.transform);
+                poolable.transform.SetParent(Managers.Scene.GetCurrentScene<BaseScene>().transform);
             }
 
             poolable.transform.SetParent(parent);

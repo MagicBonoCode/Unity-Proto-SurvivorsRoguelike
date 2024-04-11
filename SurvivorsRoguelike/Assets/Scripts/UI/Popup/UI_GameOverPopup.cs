@@ -30,11 +30,8 @@ public class UI_GameOverPopup : UI_BasePopup
 
     private void OnClickReplayButton(PointerEventData data)
     {
-        if (Managers.Scene.CurrentScene is GameScene gameScene)
-        {
-            gameScene.ReplayGame();
-            ClosePopupUI();
-        }
+        Managers.Scene.GetCurrentScene<GameScene>().ReplayGame();
+        ClosePopupUI();
     }
 
     private void OnClickCharacterSelectButton(PointerEventData data)

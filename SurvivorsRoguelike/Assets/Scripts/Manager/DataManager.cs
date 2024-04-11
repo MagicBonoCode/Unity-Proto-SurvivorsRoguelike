@@ -5,20 +5,20 @@ using UnityEngine;
 public class DataManager
 {
     // Pawn
-    public Dictionary<int, PlayerStats> PlayerStatsDictionary { get; private set; } = new Dictionary<int, PlayerStats>();
+    public Dictionary<Define.CharacterType, PlayerInfo> PlayerInfoDictionary { get; private set; } = new Dictionary<Define.CharacterType, PlayerInfo>();
     public Dictionary<int, MonsterStats> MonsterStatsDictionary { get; private set; } = new Dictionary<int, MonsterStats>();
     
     // Stage
-    public Dictionary<int, StageInfo> StageInfoDictionary { get; private set; } = new Dictionary<int, StageInfo>();
+    public Dictionary<int, StageExperienceInfo> StageExperienceInfoDictionary { get; private set; } = new Dictionary<int, StageExperienceInfo>();
 
     public void Init()
     {
         // Pawn
-        PlayerStatsDictionary = LoadData<PlayerStatsData>("PlayerStatsData.asset").MakeDictionary();
+        PlayerInfoDictionary = LoadData<PlayerInfoData>("PlayerInfoData.asset").MakeDictionary();
         MonsterStatsDictionary = LoadData<MonsterStatsData>("MonsterStatsData.asset").MakeDictionary();
         
         // Stage
-        StageInfoDictionary = LoadData<StageInfoData>("StageInfoData.asset").MakeDictionary();
+        StageExperienceInfoDictionary = LoadData<StageExperienceInfoData>("StageExperienceInfoData.asset").MakeDictionary();
     }
 
     private T LoadData<T>(string key) where T : ScriptableObject

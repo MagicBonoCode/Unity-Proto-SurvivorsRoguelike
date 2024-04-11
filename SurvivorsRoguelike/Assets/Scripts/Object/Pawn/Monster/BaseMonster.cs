@@ -6,7 +6,11 @@ using UnityEngine;
 
 public abstract class BaseMonster : BasePawn
 {
-    private float _pushForce = 5.0f;
+    public int Damage { get; protected set; }
+
+    private float _speed;
+
+    private const float PUSH_FORCE = 5.0f;
 
     protected override bool Init()
     {
@@ -16,7 +20,6 @@ public abstract class BaseMonster : BasePawn
         }
 
         ObjectType = Define.ObjectType.Monster;
-        Level = 1;
 
         return true;
     }
@@ -29,11 +32,10 @@ public abstract class BaseMonster : BasePawn
         PawnState = Define.PawnState.Moving;
 
         // Stats setting
-        Damage = Managers.Data.MonsterStatsDictionary[Level].Damage;
-        MaxHp = Managers.Data.MonsterStatsDictionary[Level].MaxHp;
-        Speed = Managers.Data.MonsterStatsDictionary[Level].Speed;
-
-        Hp = MaxHp;
+        int level = Managers.Scene.GetCurrentScene<GameScene>().Level;
+        Damage = Managers.Data.MonsterStatsDictionary[level].Damage;
+        Hp = Managers.Data.MonsterStatsDictionary[level].MaxHp;
+        _speed = Managers.Data.MonsterStatsDictionary[level].Speed;
     }
 
     protected override void FadeAnimation()
@@ -98,7 +100,7 @@ public abstract class BaseMonster : BasePawn
         }
 
         MoveDir = (player.transform.position - transform.position).normalized;
-        Vector3 movement = MoveDir * Speed * Time.deltaTime;
+        Vector3 movement = MoveDir * _speed * Time.deltaTime;
         transform.position += movement;
     }
 
@@ -129,6 +131,6 @@ public abstract class BaseMonster : BasePawn
     {
         yield return new WaitForFixedUpdate(); // Next one physics frame delay
         Vector2 pushDir = (transform.position - attacker.transform.position).normalized;
-        PawnRigidbody2D.AddForce(pushDir * _pushForce, ForceMode2D.Impulse);
+        PawnRigidbody2D.AddForce(pushDir * PUSH_FORCE, ForceMode2D.Impulse);
     }
 }

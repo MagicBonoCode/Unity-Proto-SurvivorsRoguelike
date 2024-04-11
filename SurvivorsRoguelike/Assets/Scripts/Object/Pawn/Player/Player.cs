@@ -6,18 +6,14 @@ using UnityEngine;
 
 public class Player : BasePawn
 {
+    [SerializeField] private ParticleSystem _bleedingParticle;
     [SerializeField] private Transform _indicator;
     public Transform Indicator { get { return _indicator; } }
 
-    private int _experience;
-    public int EXP { get { return _experience; } }
+    private PlayerStats _playerStat;
+    private Coroutine _coCollisionStayCheck;
 
-    private int _maxExperience;
-    public int MaxEXP { get { return _maxExperience; } }
-
-    private float _gemCollectDistance = 1.0f;
-    private float _collisionDamageDelay = 0.5f;
-    private float _collisionDamageCooldown = 0.0f;
+    private const float COLLISION_DAMAGE_DELAY = 0.5f;
 
     protected override bool Init()
     {
@@ -27,7 +23,7 @@ public class Player : BasePawn
         }
 
         ObjectType = Define.ObjectType.Player;
-        Level = 1;
+        _playerStat = GetComponent<PlayerStats>();
 
         return true;
     }
@@ -36,22 +32,11 @@ public class Player : BasePawn
     {
         base.OnEnableObject();
 
+        Managers.Skill.AddSkill<SwordSkill>();
+
         PawnSpriteRenderer.sortingOrder = (int)Define.SpriteSortingOrder.Player;
         PawnState = Define.PawnState.Idle;
-        
-        // TODO : юс╫ц
-        Managers.Skill.AddSkill<BulletSkill>(transform.position);
-        Managers.Skill.AddSkill<SwordSkill>(transform.position);
-
-        // Stats setting
-        Damage = Managers.Data.PlayerStatsDictionary[Level].Damage;
-        MaxHp = Managers.Data.PlayerStatsDictionary[Level].MaxHp;
-        Speed = Managers.Data.PlayerStatsDictionary[Level].Speed;
-        Hp = MaxHp;
-
-        // Exp setting
-        _experience = 0;
-        _maxExperience = 100;
+        Hp = _playerStat.MaxHp;
     }
 
     protected override void FadeAnimation()
@@ -80,9 +65,6 @@ public class Player : BasePawn
         {
             InputKey();
             CollectGem();
-
-            // OnCollisionStay2D Damage timer
-            _collisionDamageCooldown = Mathf.Clamp(_collisionDamageCooldown += Time.deltaTime, 0.0f, _collisionDamageDelay);
         }
     }
 
@@ -114,7 +96,7 @@ public class Player : BasePawn
             return;
         }
 
-        Vector3 movement = MoveDir * Speed * Time.fixedDeltaTime;
+        Vector3 movement = MoveDir * _playerStat.Speed * Time.fixedDeltaTime;
         transform.position += movement;
 
         if (MoveDir != Vector2.zero)
@@ -135,9 +117,9 @@ public class Player : BasePawn
 
     private void CollectGem()
     {
-        float sqrCollectDist = _gemCollectDistance * _gemCollectDistance;
+        float sqrCollectDist = _playerStat.Magnet * _playerStat.Magnet;
 
-        var findGems = Managers.Grid.GatherObjects(transform.position, _gemCollectDistance);
+        var findGems = Managers.Grid.GatherObjects(transform.position, _playerStat.Magnet);
 
         foreach (var gameObject in findGems)
         {
@@ -147,15 +129,12 @@ public class Player : BasePawn
             if (dir.sqrMagnitude <= sqrCollectDist)
             {
                 Managers.Object.Despawn(gem);
-                
-                _experience++;
-                Managers.Event.TriggerEvent("EvUpdateExp");
+                Managers.Scene.GetCurrentScene<GameScene>().Exp++;
             }
         }
     }
 
-
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag != "Monster")
         {
@@ -168,28 +147,55 @@ public class Player : BasePawn
             return;
         }
 
-        if (_collisionDamageCooldown >= _collisionDamageDelay)
+        if (_coCollisionStayCheck == null)
         {
-            OnDamaged(monster.gameObject, monster.Damage);
-            _collisionDamageCooldown = 0.0f;
+            _coCollisionStayCheck = StartCoroutine(CoCollisionStayCheck(monster.gameObject, monster.Damage));
+
+            if (!_bleedingParticle.isPlaying)
+            {
+                _bleedingParticle.Play();
+            }
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (_coCollisionStayCheck != null)
+        {
+            StopCoroutine(_coCollisionStayCheck);
+            _coCollisionStayCheck = null;
+
+            if (_bleedingParticle.isPlaying)
+            {
+                _bleedingParticle.Stop();
+            }
+        }
+    }
+
+    private IEnumerator CoCollisionStayCheck(GameObject attacker, int damage)
+    {
+        while (true)
+        {
+            OnDamaged(attacker, damage);
+            yield return new WaitForSeconds(COLLISION_DAMAGE_DELAY);
         }
     }
 
     public override void OnDamaged(GameObject attacker, int damage)
     {
         base.OnDamaged(attacker, damage);
-
-        Managers.Event.TriggerEvent("OnPlayerHit");
     }
 
     protected override void OnDead()
     {
         base.OnDead();
 
-        Managers.Skill.StopSkills();
-        if(Managers.Scene.CurrentScene is GameScene gameScene)
+        if (_bleedingParticle.isPlaying)
         {
-            gameScene.State = Define.GameSceneState.PlayerDead;
+            _bleedingParticle.Stop();
         }
+
+        Managers.Skill.StopSkills();
+        Managers.Scene.GetCurrentScene<GameScene>().State = Define.GameSceneState.PlayerDead;
     }
 }

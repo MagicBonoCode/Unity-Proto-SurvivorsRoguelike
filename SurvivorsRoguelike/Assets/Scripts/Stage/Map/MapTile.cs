@@ -13,8 +13,8 @@ public class MapTile : MonoBehaviour
 
     private void Start()
     {
-        Managers.Event.RemoveEvent("EvReplayGame", SetDefaultPosition);
-        Managers.Event.AddEvent("EvReplayGame", SetDefaultPosition);
+        Managers.Event.RemoveEvent("EvInitializeGameSettings", SetDefaultPosition);
+        Managers.Event.AddEvent("EvInitializeGameSettings", SetDefaultPosition);
     }
 
     private void SetDefaultPosition()

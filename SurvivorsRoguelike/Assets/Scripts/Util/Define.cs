@@ -12,7 +12,7 @@ public static class Define
     }
 
     public enum GameSceneState
-    { 
+    {
         Default,
         Play,
         Stop,
@@ -47,6 +47,29 @@ public static class Define
     {
         Default,
         Player = 9,
-        Monster =10,
+        Monster = 10,
+    }
+
+    public enum Stat
+    {
+        Default,
+        MaxHp = 0, // Settings for Array index reference
+        Recovery,
+        Armor,
+        Speed,
+        Damage,
+        ProjectileSpeed,
+        LifeTime,
+        AttackRange,
+        CoolTime,
+        ProjectileCount,
+        Magnet,
+    }
+
+    public enum CharacterType
+    {
+        Default,
+        TypeA,
+        TypeB,
     }
 }

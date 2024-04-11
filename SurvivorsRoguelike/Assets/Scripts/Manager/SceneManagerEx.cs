@@ -6,7 +6,17 @@ using UnityEngine.SceneManagement;
 
 public class SceneManagerEx
 {
-    public BaseScene CurrentScene { get { return UnityEngine.Object.FindObjectOfType<BaseScene>(); } }
+    private BaseScene _currentScene;
+    
+    public T GetCurrentScene<T>() where T : BaseScene
+    {
+        return _currentScene as T;
+    }
+
+    public void SetCurrentScene(BaseScene scene)
+    { 
+        _currentScene = scene;
+    }
 
     public void LoadScene(Define.Scene type, bool isAsync = true)
     {
@@ -30,6 +40,6 @@ public class SceneManagerEx
 
     public void Clear()
     {
-        CurrentScene.Clear();
+        _currentScene.Clear();
     }
 }

@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 7e7497a618cc6234080b62fa0a9d8cb9
   m_SerializeEntries:
   - m_GUID: 525df0e9bda740548b8499bfe2ed29e8
-    m_Address: PlayerStatsData.asset
+    m_Address: PlayerInfoData.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -29,8 +29,8 @@ MonoBehaviour:
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d5f93465a696f994faf2f48be955586b
-    m_Address: StageInfoData.asset
+  - m_GUID: 41fb70d2dbd21ae47b3bba4979a24c95
+    m_Address: StageExperienceInfoData.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

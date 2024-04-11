@@ -13,6 +13,7 @@ public class UI_GameScene : UI_BaseScene
 
     private enum Texts
     {
+        Text_Exp,
         Text_PlayTime,
     }
 
@@ -21,6 +22,7 @@ public class UI_GameScene : UI_BaseScene
         Slider_EXP,
     }
 
+    private Text _expText;
     private Text _playTimeText;
     private Slider _expSlider;
 
@@ -34,9 +36,10 @@ public class UI_GameScene : UI_BaseScene
 
         Managers.Event.RemoveEvent("EvUpdateExp", UpdateExpSlider);
         Managers.Event.AddEvent("EvUpdateExp", UpdateExpSlider);
-        Managers.Event.RemoveEvent("EvReplayGame", UpdateExpSlider);
-        Managers.Event.AddEvent("EvReplayGame", UpdateExpSlider);
+        Managers.Event.RemoveEvent("EvInitializeGameSettings", UpdateExpSlider);
+        Managers.Event.AddEvent("EvInitializeGameSettings", UpdateExpSlider);
 
+        _expText = GetText((int)Texts.Text_Exp);
         _playTimeText = GetText((int)Texts.Text_PlayTime);
         _expSlider = GetSlider((int)Sliders.Slider_EXP);
 
@@ -56,17 +59,16 @@ public class UI_GameScene : UI_BaseScene
             return;
         }
 
-        Player player = Managers.Object.Player;
-        float amount = (float)player.EXP / 100;
+        GameScene gameScene = Managers.Scene.GetCurrentScene<GameScene>();
+        float amount = gameScene.Exp / (float)gameScene.MaxExp;
         _expSlider.value = amount;
+        _expText.text = string.Format("lv.{0}  {1} / {2}", gameScene.Level, gameScene.Exp, gameScene.MaxExp);
     }
 
     private void UpdatePlayTime()
     {
-        if (Managers.Scene.CurrentScene is GameScene gameScene)
-        {
-            TimeSpan timeSpan = TimeSpan.FromSeconds(gameScene.GameTimer);
-            _playTimeText.text = string.Format("{0:00}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
-        }
+        GameScene gameScene = Managers.Scene.GetCurrentScene<GameScene>();
+        TimeSpan timeSpan = TimeSpan.FromSeconds(gameScene.GameTimer);
+        _playTimeText.text = string.Format("{0:00}:{1:00}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
     }
 }

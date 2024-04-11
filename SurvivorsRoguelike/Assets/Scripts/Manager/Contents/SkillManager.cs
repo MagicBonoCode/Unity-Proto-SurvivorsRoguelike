@@ -7,14 +7,14 @@ public class SkillManager
 {
     public HashSet<BaseSkill> Skills { get; private set; } = new HashSet<BaseSkill>();
 
-    public T AddSkill<T>(Vector3 position, Transform parent = null) where T : BaseSkill
+    public T AddSkill<T>(Transform parent = null) where T : BaseSkill
     {
         Type type = typeof(T);
 
         if (type == typeof(BulletSkill))
         {
             GameObject gameObject = Managers.Resource.Instantiate("BulletSkill.prefab");
-            gameObject.transform.position = position;
+            gameObject.transform.position = Vector3.zero;
 
             BulletSkill bulletSkill = gameObject.GetComponent<BulletSkill>();
             bulletSkill.transform.SetParent(parent);
@@ -26,7 +26,7 @@ public class SkillManager
         else if (type == typeof(SwordSkill))
         {
             GameObject gameObject = Managers.Resource.Instantiate("SwordSkill.prefab");
-            gameObject.transform.position = position;
+            gameObject.transform.position = Vector3.zero;
 
             SwordSkill swordSkill = gameObject.GetComponent<SwordSkill>();
             swordSkill.transform.SetParent(parent);
@@ -46,6 +46,7 @@ public class SkillManager
             skill.StopAllCoroutines();
         }
     }
+
     public void Clear()
     {
         StopSkills();
