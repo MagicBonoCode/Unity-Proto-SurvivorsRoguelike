@@ -36,7 +36,8 @@ public class Player : BasePawn
 
         PawnSpriteRenderer.sortingOrder = (int)Define.SpriteSortingOrder.Player;
         PawnState = Define.PawnState.Idle;
-        Hp = _playerStat.MaxHp;
+        MaxHp = _playerStat.MaxHp;
+        Hp = MaxHp;
     }
 
     protected override void FadeAnimation()

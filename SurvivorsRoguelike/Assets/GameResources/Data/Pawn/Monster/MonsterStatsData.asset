@@ -25,31 +25,31 @@ MonoBehaviour:
     _damage: 1
     _maxHp: 10
     _speed: 4
-  - _level: 3
+  - _level: 4
     _damage: 1
     _maxHp: 10
     _speed: 4
-  - _level: 3
+  - _level: 5
     _damage: 1
     _maxHp: 10
     _speed: 4
-  - _level: 3
+  - _level: 6
     _damage: 1
     _maxHp: 10
     _speed: 4
-  - _level: 3
+  - _level: 7
     _damage: 1
     _maxHp: 10
     _speed: 4
-  - _level: 3
+  - _level: 8
     _damage: 1
     _maxHp: 10
     _speed: 4
-  - _level: 3
+  - _level: 9
     _damage: 1
     _maxHp: 10
     _speed: 4
-  - _level: 3
+  - _level: 10
     _damage: 1
     _maxHp: 10
     _speed: 4

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class BasePawn : BaseObject
 {
+    public int MaxHp { get; protected set; }
     public int Hp { get; protected set; }
     public Vector2 MoveDir { get; protected set; }
 
