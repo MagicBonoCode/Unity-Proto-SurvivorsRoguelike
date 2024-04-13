@@ -24,7 +24,7 @@ MonoBehaviour:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1ac91f008d46e4646acb7bbf388fa362
-    m_Address: Player.prefab
+    m_Address: Player_TypeA.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
@@ -61,6 +61,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 2e6bb757e623a0e468c715ea5fcb1f93
     m_Address: EventSystem.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 30c1d18d2e3b44c4c90f79a83f5a4f71
+    m_Address: Player_TypeB.prefab
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

@@ -26,7 +26,7 @@ MonoBehaviour:
       _coolTimeReductionRatio: 1
       _additionalProjectileCount: 1
       _magnet: 1
-    _defaultActiveSkill: 2
+    _defaultActiveSkill: 1
     _icon: {fileID: 0}
     _name: 
     _description: 

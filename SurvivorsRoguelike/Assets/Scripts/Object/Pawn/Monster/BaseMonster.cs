@@ -109,6 +109,10 @@ public abstract class BaseMonster : BasePawn
     {
         base.OnDamaged(attacker, damage);
 
+        GameObject damageText = Managers.Resource.Instantiate("UI_DamageTextWorldSpace.ui");
+        damageText.transform.position = transform.position;
+        damageText.GetComponent<UI_DamageTextWorldSpace>().SetDamageText(damage);
+
         if (Hp <= 0)
         {
             return;

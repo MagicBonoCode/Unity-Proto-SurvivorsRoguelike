@@ -15,7 +15,7 @@ public class ObjectManager
         Type type = typeof(T);
         if (type == typeof(Player))
         {
-            GameObject gameObject = Managers.Resource.Instantiate("Player.prefab", parent);
+            GameObject gameObject = Managers.Resource.Instantiate("Player_TypeA.prefab", parent);
             gameObject.transform.position = position;
 
             Player player = gameObject.GetComponent<Player>();

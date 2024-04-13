@@ -42,7 +42,13 @@ MonoBehaviour:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cc6a5d1fe2b04364e8f0e19966d65714
-    m_Address: UI_SkillSelectPopup.prefab
+    m_Address: UI_SkillSelectPopup.ui
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9de4417fc4d84d34c8b26626d9125f0d
+    m_Address: UI_DamageTextWorldSpace.ui
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
