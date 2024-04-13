@@ -50,26 +50,30 @@ public static class Define
         Monster = 10,
     }
 
-    public enum Stat
-    {
-        Default,
-        MaxHp = 0, // Settings for Array index reference
-        Recovery,
-        Armor,
-        Speed,
-        Damage,
-        ProjectileSpeed,
-        LifeTime,
-        AttackRange,
-        CoolTime,
-        ProjectileCount,
-        Magnet,
-    }
-
-    public enum CharacterType
+    public enum PlayerType
     {
         Default,
         TypeA,
         TypeB,
+    }
+
+    public enum MonsterType
+    { 
+        Default,
+        TypeA,
+        TypeB,
+    }
+
+    public enum ActiveSkillType
+    {
+        Default,
+        Bullet,
+        Sword,
+    }
+
+    public enum PassiveSkillType
+    {
+        Default,
+        Heart,
     }
 }

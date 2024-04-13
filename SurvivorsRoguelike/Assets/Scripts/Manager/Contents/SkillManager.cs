@@ -1,42 +1,36 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SkillManager
 {
-    public HashSet<BaseSkill> Skills { get; private set; } = new HashSet<BaseSkill>();
+    public HashSet<BaseActiveSkill> Skills { get; private set; } = new HashSet<BaseActiveSkill>();
 
-    public T AddSkill<T>(Transform parent = null) where T : BaseSkill
+    public void AddActiveSkill(Define.ActiveSkillType skillType, Player player, Transform parent = null)
     {
-        Type type = typeof(T);
-
-        if (type == typeof(BulletSkill))
+        GameObject skillGameObject;
+        switch (skillType)
         {
-            GameObject gameObject = Managers.Resource.Instantiate("BulletSkill.prefab");
-            gameObject.transform.position = Vector3.zero;
+            case Define.ActiveSkillType.Bullet:
+                skillGameObject = Managers.Resource.Instantiate("BulletSkill.prefab");
+                skillGameObject.transform.position = Vector3.zero;
 
-            BulletSkill bulletSkill = gameObject.GetComponent<BulletSkill>();
-            bulletSkill.transform.SetParent(parent);
-            bulletSkill.ActivateSkill();
-            Skills.Add(bulletSkill);
+                BulletSkill bulletSkill = skillGameObject.GetComponent<BulletSkill>();
+                bulletSkill.transform.SetParent(parent);
+                bulletSkill.Init(player);
+                Skills.Add(bulletSkill);
+                break;
 
-            return bulletSkill as T;
+            case Define.ActiveSkillType.Sword:
+                skillGameObject = Managers.Resource.Instantiate("SwordSkill.prefab");
+                skillGameObject.transform.position = Vector3.zero;
+
+                SwordSkill swordSkill = skillGameObject.GetComponent<SwordSkill>();
+                swordSkill.transform.SetParent(parent);
+                swordSkill.Init(player);
+                Skills.Add(swordSkill);
+                break;
         }
-        else if (type == typeof(SwordSkill))
-        {
-            GameObject gameObject = Managers.Resource.Instantiate("SwordSkill.prefab");
-            gameObject.transform.position = Vector3.zero;
-
-            SwordSkill swordSkill = gameObject.GetComponent<SwordSkill>();
-            swordSkill.transform.SetParent(parent);
-            swordSkill.ActivateSkill();
-            Skills.Add(swordSkill);
-
-            return swordSkill as T;
-        }
-
-        return null;
     }
 
     public void StopSkills()

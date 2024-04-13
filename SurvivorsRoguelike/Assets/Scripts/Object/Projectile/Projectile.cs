@@ -9,8 +9,8 @@ public class Projectile : BaseObject
     private Vector3 _moveDir;
     private int _damage;
     private float _speed;
+    private float _lifeTimer;
     private float _lifeTime;
-    private float _maxLifeTime;
 
     protected override bool Init()
     {
@@ -24,14 +24,14 @@ public class Projectile : BaseObject
         return true;
     }
 
-    public void SetInfo(BasePawn owner, Vector3 moveDir, int damage)
+    public void SetInfo(BasePawn owner, Vector3 moveDir, int damage, float speed, float lifeTime)
     {
         _owner = owner;
         _moveDir = moveDir;
         _damage = damage;
-        _speed = 8.0f;
-        _lifeTime = 0.0f;
-        _maxLifeTime = 10.0f;
+        _speed = speed;
+        _lifeTimer = 0.0f;
+        _lifeTime = lifeTime;
         
         transform.eulerAngles = new Vector3(0, 0, Mathf.Atan2(-_moveDir.x, _moveDir.y) * 180 / Mathf.PI);
     }
@@ -42,8 +42,8 @@ public class Projectile : BaseObject
 
         transform.position += _moveDir * _speed * Time.fixedDeltaTime;
 
-        _lifeTime = Mathf.Clamp(_lifeTime + Time.deltaTime, 0.0f, _maxLifeTime);
-        if (_lifeTime >= _maxLifeTime)
+        _lifeTimer = Mathf.Clamp(_lifeTimer + Time.deltaTime, 0.0f, _lifeTime);
+        if (_lifeTimer >= _lifeTime)
         {
             Managers.Object.Despawn(this);
         }

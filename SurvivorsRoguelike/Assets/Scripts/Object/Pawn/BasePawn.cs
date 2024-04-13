@@ -4,7 +4,10 @@ using UnityEngine;
 
 public abstract class BasePawn : BaseObject
 {
-    public int MaxHp { get; protected set; }
+    public virtual int MaxHp { get; }
+    public virtual int Recovery { get; }
+    public virtual int Armor { get; }
+    public virtual float Speed { get; }
     public int Hp { get; protected set; }
     public Vector2 MoveDir { get; protected set; }
 
@@ -25,16 +28,10 @@ public abstract class BasePawn : BaseObject
         }
     }
 
-    protected abstract void FadeAnimation();
-
-    private Animator _animator;
-    private SpriteRenderer _spriteRenderer;
-    private Rigidbody2D _rigidbody2D;
-    private CircleCollider2D _circleCollider2D;
-
-    protected Animator PawnAnimator { get { return _animator; } }
-    protected SpriteRenderer PawnSpriteRenderer { get { return _spriteRenderer; } }
-    protected Rigidbody2D PawnRigidbody2D { get { return _rigidbody2D; } }
+    protected Animator PawnAnimator { get; private set; }
+    protected SpriteRenderer PawnSpriteRenderer { get; private set; }
+    protected Rigidbody2D PawnRigidbody2D { get; private set; }
+    protected CircleCollider2D PawnCircleCollider2D { get; private set; }
 
     protected override bool Init()
     {
@@ -43,10 +40,10 @@ public abstract class BasePawn : BaseObject
             return false;
         }
 
-        _animator = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        _circleCollider2D = GetComponent<CircleCollider2D>();
+        PawnAnimator = GetComponent<Animator>();
+        PawnSpriteRenderer = GetComponent<SpriteRenderer>();
+        PawnRigidbody2D = GetComponent<Rigidbody2D>();
+        PawnCircleCollider2D = GetComponent<CircleCollider2D>();
 
         return true;
     }
@@ -55,10 +52,12 @@ public abstract class BasePawn : BaseObject
     {
         base.OnEnableObject();
 
-        _rigidbody2D.simulated = true;
-        _rigidbody2D.velocity = Vector2.zero;
-        _circleCollider2D.enabled = true;
+        PawnRigidbody2D.simulated = true;
+        PawnRigidbody2D.velocity = Vector2.zero;
+        PawnCircleCollider2D.enabled = true;
     }
+    
+    protected abstract void FadeAnimation();
 
     public virtual void OnDamaged(GameObject attacker, int damage)
     {
@@ -78,9 +77,9 @@ public abstract class BasePawn : BaseObject
     protected virtual void OnDead()
     {
         PawnState = Define.PawnState.Dead;
-        _rigidbody2D.simulated = false;
-        _rigidbody2D.velocity = Vector2.zero;
-        _spriteRenderer.sortingOrder = 6;
-        _circleCollider2D.enabled = false;
+        PawnRigidbody2D.simulated = false;
+        PawnRigidbody2D.velocity = Vector2.zero;
+        PawnSpriteRenderer.sortingOrder = 6;
+        PawnCircleCollider2D.enabled = false;
     }
 }

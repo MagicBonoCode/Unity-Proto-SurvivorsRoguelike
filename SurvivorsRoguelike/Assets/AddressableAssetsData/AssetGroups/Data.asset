@@ -17,20 +17,26 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: 7e7497a618cc6234080b62fa0a9d8cb9
   m_SerializeEntries:
-  - m_GUID: 525df0e9bda740548b8499bfe2ed29e8
-    m_Address: PlayerInfoData.asset
+  - m_GUID: 33e7dc210f3895b4e96d93982b57bb2f
+    m_Address: MonsterInfo.data
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 971c8a1259795cc44bf91510b7885785
-    m_Address: MonsterStatsData.asset
+  - m_GUID: 57a0cd3ae63acd64e985d65ed0480346
+    m_Address: StageInfo.data
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 41fb70d2dbd21ae47b3bba4979a24c95
-    m_Address: StageExperienceInfoData.asset
+  - m_GUID: 927c57023bd006249b3e5db0b9f41517
+    m_Address: ActiveSkillInfo.data
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PreLoad
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a108164e46c139b4094d2b18d5b74514
+    m_Address: PlayerInfo.data
     m_ReadOnly: 0
     m_SerializedLabels:
     - PreLoad

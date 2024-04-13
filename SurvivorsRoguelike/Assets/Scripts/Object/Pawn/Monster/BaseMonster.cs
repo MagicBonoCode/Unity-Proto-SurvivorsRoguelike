@@ -1,14 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public abstract class BaseMonster : BasePawn
 {
-    public int Damage { get; protected set; }
-
-    private float _speed;
+    public virtual int Damage { get; }
+    public virtual float ProjectileSpeed { get; }
 
     private const float PUSH_FORCE = 5.0f;
 
@@ -30,12 +27,6 @@ public abstract class BaseMonster : BasePawn
 
         PawnSpriteRenderer.sortingOrder = (int)Define.SpriteSortingOrder.Monster;
         PawnState = Define.PawnState.Moving;
-
-        // Stats setting
-        int level = Managers.Scene.GetCurrentScene<GameScene>().Level;
-        Damage = Managers.Data.MonsterStatsDictionary[level].Damage;
-        Hp = Managers.Data.MonsterStatsDictionary[level].MaxHp;
-        _speed = Managers.Data.MonsterStatsDictionary[level].Speed;
     }
 
     protected override void FadeAnimation()
@@ -100,7 +91,7 @@ public abstract class BaseMonster : BasePawn
         }
 
         MoveDir = (player.transform.position - transform.position).normalized;
-        Vector3 movement = MoveDir * _speed * Time.deltaTime;
+        Vector3 movement = MoveDir * Speed * Time.deltaTime;
         transform.position += movement;
     }
 

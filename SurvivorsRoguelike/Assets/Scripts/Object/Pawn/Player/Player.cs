@@ -1,16 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class Player : BasePawn
 {
+    public override int MaxHp { get { return _playerStatsDataArray[_level - 1].MaxHp; } }
+    public override int Recovery { get { return _playerStatsDataArray[_level - 1].Recovery; } }
+    public override int Armor { get { return _playerStatsDataArray[_level - 1].Armor; } }
+    public override float Speed { get { return _playerStatsDataArray[_level - 1].Speed; } }
+
+    public float DamageRatio { get { return _playerStatsDataArray[_level - 1].DamageRatio; } }
+    public float ProjectileSpeedRatio { get { return _playerStatsDataArray[_level - 1].ProjectileSpeedRatio; } }
+    public float LifeTimeRatio { get { return _playerStatsDataArray[_level - 1].Speed; } }
+    public float AttackRangeRatio { get { return _playerStatsDataArray[_level - 1].AttackRangeRatio; } }
+    public float CoolTimeReductionRatio { get { return _playerStatsDataArray[_level - 1].CoolTimeReductionRatio; } }
+    public int AdditionalProjectileCount { get { return _playerStatsDataArray[_level - 1].AdditionalProjectileCount; } }
+    public float Magnet { get { return _playerStatsDataArray[_level - 1].Magnet; } }
+
+    public Define.ActiveSkillType DefaultActiveSkill { get; private set; }
+    public Sprite Icon { get; private set; }
+    public string Name { get; private set; }
+    public string Description { get; private set; }
+
     [SerializeField] private ParticleSystem _bleedingParticle;
     [SerializeField] private Transform _indicator;
     public Transform Indicator { get { return _indicator; } }
 
-    private PlayerStats _playerStat;
+    private PlayerStatsData[] _playerStatsDataArray = new PlayerStatsData[0];
+    private int _level;
     private Coroutine _coCollisionStayCheck;
 
     private const float COLLISION_DAMAGE_DELAY = 0.5f;
@@ -23,10 +40,15 @@ public class Player : BasePawn
         }
 
         ObjectType = Define.ObjectType.Player;
-        _playerStat = GetComponent<PlayerStats>();
+        _playerStatsDataArray = Managers.Data.PlayerInfoDictionary[Define.PlayerType.TypeA].PlayerStatsDataArray;
+        _level = 1;
+        DefaultActiveSkill = Managers.Data.PlayerInfoDictionary[Define.PlayerType.TypeA].DefaultActiveSkill;
+        Icon = Managers.Data.PlayerInfoDictionary[Define.PlayerType.TypeA].Icon;
+        Name = Managers.Data.PlayerInfoDictionary[Define.PlayerType.TypeA].Name;
+        Description = Managers.Data.PlayerInfoDictionary[Define.PlayerType.TypeA].Description;
 
-        Managers.Event.RemoveEvent("EvUpdateStageLevel", () => { MaxHp = _playerStat.MaxHp; });
-        Managers.Event.AddEvent("EvUpdateStageLevel", () => { MaxHp = _playerStat.MaxHp; });
+        Managers.Event.RemoveEvent("EvUpdateSceneLevel", () => { _level = Managers.Scene.GetCurrentScene<GameScene>().Level; });
+        Managers.Event.AddEvent("EvUpdateSceneLevel", () => { _level = Managers.Scene.GetCurrentScene<GameScene>().Level; });
 
         return true;
     }
@@ -35,12 +57,12 @@ public class Player : BasePawn
     {
         base.OnEnableObject();
 
-        Managers.Skill.AddSkill<SwordSkill>();
-
         PawnSpriteRenderer.sortingOrder = (int)Define.SpriteSortingOrder.Player;
         PawnState = Define.PawnState.Idle;
-        MaxHp = _playerStat.MaxHp;
         Hp = MaxHp;
+
+        // TODO: Skill Add
+        Managers.Skill.AddActiveSkill(DefaultActiveSkill, this);
     }
 
     protected override void FadeAnimation()
@@ -100,7 +122,7 @@ public class Player : BasePawn
             return;
         }
 
-        Vector3 movement = MoveDir * _playerStat.Speed * Time.fixedDeltaTime;
+        Vector3 movement = MoveDir * Speed * Time.fixedDeltaTime;
         transform.position += movement;
 
         if (MoveDir != Vector2.zero)
@@ -121,9 +143,9 @@ public class Player : BasePawn
 
     private void CollectGem()
     {
-        float sqrCollectDist = _playerStat.Magnet * _playerStat.Magnet;
+        float sqrCollectDist = Magnet * Magnet;
 
-        var findGems = Managers.Grid.GatherObjects(transform.position, _playerStat.Magnet);
+        var findGems = Managers.Grid.GatherObjects(transform.position, Magnet);
 
         foreach (var gameObject in findGems)
         {
@@ -154,11 +176,7 @@ public class Player : BasePawn
         if (_coCollisionStayCheck == null)
         {
             _coCollisionStayCheck = StartCoroutine(CoCollisionStayCheck(monster.gameObject, monster.Damage));
-
-            if (!_bleedingParticle.isPlaying)
-            {
-                _bleedingParticle.Play();
-            }
+            _bleedingParticle.Play();
         }
     }
 
@@ -194,11 +212,7 @@ public class Player : BasePawn
     {
         base.OnDead();
 
-        if (_bleedingParticle.isPlaying)
-        {
-            _bleedingParticle.Stop();
-        }
-
+        _bleedingParticle.Stop();
         Managers.Skill.StopSkills();
         Managers.Scene.GetCurrentScene<GameScene>().State = Define.GameSceneState.PlayerDead;
     }

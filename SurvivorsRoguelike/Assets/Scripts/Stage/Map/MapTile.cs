@@ -35,11 +35,11 @@ public class MapTile : MonoBehaviour
 
         if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y))
         {
-            transform.Translate(Vector3.right * dirX * 40);
+            transform.Translate(Vector3.right * dirX * 80);
         }
         else
         {
-            transform.Translate(Vector3.up * dirY * 40);
+            transform.Translate(Vector3.up * dirY * 80);
         }
     }
 }

@@ -159,7 +159,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 20, y: 20}
+  m_Size: {x: 40, y: 40}
   m_EdgeRadius: 0
 --- !u!1 &2131153163571115150
 GameObject:
@@ -175,7 +175,6 @@ GameObject:
   - component: {fileID: 3709205776161335005}
   - component: {fileID: 7190674125816946481}
   - component: {fileID: 6215514576495694456}
-  - component: {fileID: 765559532251656870}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -290,7 +289,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
 --- !u!50 &3709205776161335005
 Rigidbody2D:
   serializedVersion: 4
@@ -353,19 +352,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bleedingParticle: {fileID: 3671449233423793528}
   _indicator: {fileID: 8649221372065398653}
---- !u!114 &765559532251656870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131153163571115150}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cccd0a43eefda8c4c9a2093ec05c3f36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _characterType: 1
 --- !u!1 &3986616765967140348
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,7 +590,7 @@ MonoBehaviour:
   m_Follow: {fileID: 4286729862519127708}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 8.4
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
