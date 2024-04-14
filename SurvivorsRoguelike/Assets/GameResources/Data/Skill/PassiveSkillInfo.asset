@@ -12,4 +12,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d72a017e5f6ed94885a31c435725542, type: 3}
   m_Name: PassiveSkillInfo
   m_EditorClassIdentifier: 
-  _dataArray: []
+  _dataArray:
+  - _passiveSkillType: 1
+    _additionalPlayerStatsDataArray:
+    - _maxHp: 10
+      _recovery: 0
+      _armor: 0
+      _speed: 0
+      _damageRatio: 0
+      _projectileSpeedRatio: 0
+      _lifeTimeRatio: 0
+      _attackRangeRatio: 0
+      _coolTimeReductionRatio: 0
+      _additionalProjectileCount: 0
+      _magnet: 0
+    - _maxHp: 20
+      _recovery: 0
+      _armor: 0
+      _speed: 0
+      _damageRatio: 0
+      _projectileSpeedRatio: 0
+      _lifeTimeRatio: 0
+      _attackRangeRatio: 0
+      _coolTimeReductionRatio: 0
+      _additionalProjectileCount: 0
+      _magnet: 0
+    _icon: {fileID: 21300000, guid: c3aab7237df394c4890e647a4ae580ea, type: 3}
+    _name: "\uCCB4\uB825"
+    _descriptions:
+    - "\uCD5C\uB300 \uCCB4\uB825 10 \uC99D\uAC00."
+    - "\uCD5C\uB300 \uCCB4\uB825 20 \uC99D\uAC00."

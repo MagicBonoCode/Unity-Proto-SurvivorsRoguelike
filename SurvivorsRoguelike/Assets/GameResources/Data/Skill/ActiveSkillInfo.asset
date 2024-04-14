@@ -20,10 +20,25 @@ MonoBehaviour:
       _lifeTime: 5
       _attackRange: 0
       _coolTime: 1
+      _projectileCount: 5
+    - _damage: 60
+      _projectileSpeed: 10
+      _lifeTime: 5
+      _attackRange: 0
+      _coolTime: 1
       _projectileCount: 10
-    _icon: {fileID: 0}
-    _name: 
-    _descriptions: []
+    - _damage: 60
+      _projectileSpeed: 10
+      _lifeTime: 5
+      _attackRange: 0
+      _coolTime: 1
+      _projectileCount: 10
+    _icon: {fileID: 21300000, guid: dd3885098198d104888439be4c590aba, type: 3}
+    _name: "\uBD88\uBC1C\uC0AC"
+    _descriptions:
+    - "\uC0AC\uBC29\uC5D0 \uBD88\uC744 \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
+    - "11\uC0AC\uBC29\uC5D0 \uBD88\uC744 \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
+    - "22\uC0AC\uBC29\uC5D0 \uBD88\uC744 \uBC1C\uC0AC\uD569\uB2C8\uB2E4."
   - _activeSkillType: 2
     _activeSkillStatsDataArray:
     - _damage: 30
@@ -32,6 +47,14 @@ MonoBehaviour:
       _attackRange: 0
       _coolTime: 4
       _projectileCount: 0
-    _icon: {fileID: 0}
-    _name: 
-    _descriptions: []
+    - _damage: 30
+      _projectileSpeed: 0
+      _lifeTime: 0
+      _attackRange: 0
+      _coolTime: 4
+      _projectileCount: 0
+    _icon: {fileID: 21300000, guid: c890dd06d4a350946ab11e4778bf47d8, type: 3}
+    _name: "\uBCA0\uAE30"
+    _descriptions:
+    - "\uCE7C\uB85C \uBCB1\uB2C8\uB2E4."
+    - "11\uCE7C\uB85C \uBCB1\uB2C8\uB2E4."

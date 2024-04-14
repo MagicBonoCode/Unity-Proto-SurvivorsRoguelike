@@ -38,6 +38,8 @@ public class SkillManager
                 ActiveSkills[activeSkillType] = swordSkill;
                 break;
         }
+
+        Managers.Event.TriggerEvent("EvAddedSkill");
     }
 
     public void AddPassiveSkill(Define.PassiveSkillType passiveSkillType)
@@ -56,6 +58,8 @@ public class SkillManager
                 PassiveSkills[passiveSkillType] = heartPassive;
                 break;
         }
+
+        Managers.Event.TriggerEvent("EvAddedSkill");
     }
 
     public void StopActiveSkills()
