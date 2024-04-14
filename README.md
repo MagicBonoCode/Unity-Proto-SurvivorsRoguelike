@@ -2,6 +2,8 @@
 
 **프로젝트 정보**
 
+![Animation](https://github.com/MagicBonoCode/Unity-Proto-SurvivorsRoguelike/assets/165194787/4255ff5f-2420-4ab1-bdd6-6c5ec095aa3b)
+
 엔진 : Unity
 
 엔진 버전 : 2022.3.21f1
