@@ -32,7 +32,7 @@ public class NormalMonster : BaseMonster
     protected override void OnEnableObject()
     {
         base.OnEnableObject();
-        _level = Managers.Scene.GetCurrentScene<GameScene>().Level;
+        _level = 1 + Managers.Scene.GetCurrentScene<GameScene>().Level / 10;
         Hp = MaxHp;
     }
 

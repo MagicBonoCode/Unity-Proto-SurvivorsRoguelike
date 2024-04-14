@@ -4,12 +4,19 @@ using UnityEngine;
 
 public class SkillManager
 {
-    public HashSet<BaseActiveSkill> Skills { get; private set; } = new HashSet<BaseActiveSkill>();
+    public Dictionary<Define.ActiveSkillType, BaseActiveSkill> ActiveSkills { get; private set; } = new Dictionary<Define.ActiveSkillType, BaseActiveSkill>();
+    public Dictionary<Define.PassiveSkillType, PassiveSkill> PassiveSkills { get; private set; } = new Dictionary<Define.PassiveSkillType, PassiveSkill>();
 
-    public void AddActiveSkill(Define.ActiveSkillType skillType, Player player, Transform parent = null)
+    public void AddActiveSkill(Define.ActiveSkillType activeSkillType, Player player, Transform parent = null)
     {
         GameObject skillGameObject;
-        switch (skillType)
+        if (ActiveSkills.ContainsKey(activeSkillType))
+        {
+            ActiveSkills[activeSkillType].ActiveSkillLevelUp();
+            return;
+        }
+
+        switch (activeSkillType)
         {
             case Define.ActiveSkillType.Bullet:
                 skillGameObject = Managers.Resource.Instantiate("BulletSkill.prefab");
@@ -17,8 +24,8 @@ public class SkillManager
 
                 BulletSkill bulletSkill = skillGameObject.GetComponent<BulletSkill>();
                 bulletSkill.transform.SetParent(parent);
-                bulletSkill.Init(player);
-                Skills.Add(bulletSkill);
+                bulletSkill.Init(activeSkillType, player);
+                ActiveSkills[activeSkillType] = bulletSkill;
                 break;
 
             case Define.ActiveSkillType.Sword:
@@ -27,23 +34,42 @@ public class SkillManager
 
                 SwordSkill swordSkill = skillGameObject.GetComponent<SwordSkill>();
                 swordSkill.transform.SetParent(parent);
-                swordSkill.Init(player);
-                Skills.Add(swordSkill);
+                swordSkill.Init(activeSkillType, player);
+                ActiveSkills[activeSkillType] = swordSkill;
                 break;
         }
     }
 
-    public void StopSkills()
+    public void AddPassiveSkill(Define.PassiveSkillType passiveSkillType)
     {
-        foreach (var skill in Skills)
+        if (PassiveSkills.ContainsKey(passiveSkillType))
         {
-            skill.StopAllCoroutines();
+            PassiveSkills[passiveSkillType].PassiveSkillLevelUp();
+            return;
+        }
+
+        switch (passiveSkillType)
+        {
+            case Define.PassiveSkillType.Heart:
+                PassiveSkill heartPassive = new PassiveSkill();
+                heartPassive.Init(passiveSkillType);
+                PassiveSkills[passiveSkillType] = heartPassive;
+                break;
+        }
+    }
+
+    public void StopActiveSkills()
+    {
+        foreach (var activeSkill in ActiveSkills)
+        {
+            activeSkill.Value.StopAllCoroutines();
         }
     }
 
     public void Clear()
     {
-        StopSkills();
-        Skills.Clear();
+        StopActiveSkills();
+        ActiveSkills.Clear();
+        PassiveSkills.Clear();
     }
 }

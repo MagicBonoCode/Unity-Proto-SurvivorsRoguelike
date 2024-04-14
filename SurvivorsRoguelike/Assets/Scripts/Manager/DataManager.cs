@@ -10,7 +10,7 @@ public class DataManager
 
     // Skill
     public Dictionary<Define.ActiveSkillType, ActiveSkillInfoData> ActiveSkillInfoDictionary { get; private set; } = new Dictionary<Define.ActiveSkillType, ActiveSkillInfoData>();
-    //public Dictionary<Define.PassiveSkillType, PassiveSkillInfoData> PassiveSkillInfoDictionary { get; private set; } = new Dictionary<Define.PassiveSkillType, PassiveSkillInfoData>();
+    public Dictionary<Define.PassiveSkillType, PassiveSkillInfoData> PassiveSkillInfoDictionary { get; private set; } = new Dictionary<Define.PassiveSkillType, PassiveSkillInfoData>();
 
     // Stage
     public StageInfoData StageInfo { get; private set; }
@@ -23,7 +23,7 @@ public class DataManager
 
         // Skill
         ActiveSkillInfoDictionary = LoadData<ActiveSkillInfo>("ActiveSkillInfo.data").MakeDictionary();
-        //PassiveSkillInfoDictionary = LoadData<PassiveSkillInfo>("PassiveSkillInfo.data").MakeDictionary();
+        PassiveSkillInfoDictionary = LoadData<PassiveSkillInfo>("PassiveSkillInfo.data").MakeDictionary();
 
         // Stage
         StageInfo = LoadData<StageInfo>("StageInfo.data").Data;

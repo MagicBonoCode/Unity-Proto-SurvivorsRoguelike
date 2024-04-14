@@ -15,7 +15,7 @@ public static class Define
     {
         Default,
         Play,
-        Stop,
+        Pause,
         PlayerDead,
     }
 
@@ -69,11 +69,13 @@ public static class Define
         Default,
         Bullet,
         Sword,
+        MaxCount,
     }
 
     public enum PassiveSkillType
     {
         Default,
         Heart,
+        MaxCount,
     }
 }

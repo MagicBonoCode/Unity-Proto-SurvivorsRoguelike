@@ -47,8 +47,8 @@ public class Player : BasePawn
         Name = Managers.Data.PlayerInfoDictionary[Define.PlayerType.TypeA].Name;
         Description = Managers.Data.PlayerInfoDictionary[Define.PlayerType.TypeA].Description;
 
-        Managers.Event.RemoveEvent("EvUpdateSceneLevel", () => { _level = Managers.Scene.GetCurrentScene<GameScene>().Level; });
-        Managers.Event.AddEvent("EvUpdateSceneLevel", () => { _level = Managers.Scene.GetCurrentScene<GameScene>().Level; });
+        Managers.Event.RemoveEvent("EvUpdateSceneLevel", () => { _level = 1 + Managers.Scene.GetCurrentScene<GameScene>().Level / 10; });
+        Managers.Event.AddEvent("EvUpdateSceneLevel", () => { _level = 1 + Managers.Scene.GetCurrentScene<GameScene>().Level / 10; });
 
         return true;
     }
@@ -213,7 +213,7 @@ public class Player : BasePawn
         base.OnDead();
 
         _bleedingParticle.Stop();
-        Managers.Skill.StopSkills();
+        Managers.Skill.StopActiveSkills();
         Managers.Scene.GetCurrentScene<GameScene>().State = Define.GameSceneState.PlayerDead;
     }
 }

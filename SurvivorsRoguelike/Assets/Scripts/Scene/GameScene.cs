@@ -19,13 +19,15 @@ public class GameScene : BaseScene
             switch (_state)
             {
                 case Define.GameSceneState.Play:
+                    Time.timeScale = 1.0f;
                     if (_coPlayGameScene == null)
                     {
                         _coPlayGameScene = StartCoroutine(CoPlayGameScene());
                     }
                     break;
 
-                case Define.GameSceneState.Stop:
+                case Define.GameSceneState.Pause:
+                    Time.timeScale = 0.0f;
                     if (_coPlayGameScene != null)
                     {
                         StopCoroutine(_coPlayGameScene);
@@ -50,17 +52,20 @@ public class GameScene : BaseScene
     public int MaxExp { get; private set; }
 
     private int _experiecne = 0;
-    public int Exp { 
-        get 
-        { 
-            return _experiecne; 
+    public int Exp
+    {
+        get
+        {
+            return _experiecne;
         }
         set
         {
             _experiecne = value;
             if (_experiecne >= MaxExp)
-            { 
+            {
                 Level = CalculateLevel();
+                State = Define.GameSceneState.Pause;
+                Managers.UI.ShowPopupUI<UI_SkillSelectPopup>();
                 Managers.Event.TriggerEvent("EvUpdateSceneLevel");
             }
             Managers.Event.TriggerEvent("EvUpdateExp");
@@ -98,15 +103,15 @@ public class GameScene : BaseScene
 
     private int CalculateLevel()
     {
-        for (int level = Level - 1; level < Managers.Data.StageInfo.NextLevelExperienceArray.Length; level++)
+        for (int level = Level; level < Managers.Data.StageInfo.NextLevelExperienceArray.Length; level++)
         {
-            if (_experiecne < Managers.Data.StageInfo.NextLevelExperienceArray[level])
+            if (_experiecne < Managers.Data.StageInfo.NextLevelExperienceArray[level - 1])
             {
-                MaxExp = Managers.Data.StageInfo.NextLevelExperienceArray[level];
+                MaxExp = Managers.Data.StageInfo.NextLevelExperienceArray[level - 1];
                 return level;
             }
 
-            _experiecne -= Managers.Data.StageInfo.NextLevelExperienceArray[level];
+            _experiecne -= Managers.Data.StageInfo.NextLevelExperienceArray[level - 1];
         }
 
         int maxLevel = Managers.Data.StageInfo.NextLevelExperienceArray.Length;
