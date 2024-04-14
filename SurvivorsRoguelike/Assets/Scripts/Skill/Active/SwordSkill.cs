@@ -22,7 +22,7 @@ public class SwordSkill : BaseActiveSkill
     public override void Init(Player player)
     {
         _player = player;
-        _activeSkillStatsDataArray = Managers.Data.ActiveSkillInfoDictionary[Define.ActiveSkillType.Bullet].ActiveSkillStatsDataArray;
+        _activeSkillStatsDataArray = Managers.Data.ActiveSkillInfoDictionary[Define.ActiveSkillType.Sword].ActiveSkillStatsDataArray;
         Level = 1;
 
         ActivateSkill();
@@ -55,8 +55,7 @@ public class SwordSkill : BaseActiveSkill
         BaseMonster monster = collision.gameObject.GetComponent<BaseMonster>();
         if (monster != null)
         {
-            int damage = Damage;
-            monster.OnDamaged(_player.Indicator.gameObject, damage);
+            monster.OnDamaged(_player.Indicator.gameObject, Util.RandomDamage(Damage));
         }
     }
 }

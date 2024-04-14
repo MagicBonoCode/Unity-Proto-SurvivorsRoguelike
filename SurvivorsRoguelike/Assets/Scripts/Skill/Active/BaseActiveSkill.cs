@@ -36,9 +36,6 @@ public abstract class BaseActiveSkill : MonoBehaviour
     protected virtual void GenerateProjectile(Player owner, Vector3 startPos, Vector3 moveDir)
     {
         Projectile projectile = Managers.Object.Spawn<Projectile>(startPos);
-        int damage = Damage;
-        float speed = ProjectileSpeed;
-        float lifeTime = LifeTime;
-        projectile.SetInfo(owner, moveDir, damage, speed, lifeTime);
+        projectile.SetInfo(owner, moveDir, Util.RandomDamage(Damage), ProjectileSpeed, LifeTime);
     }
 }

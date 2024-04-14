@@ -63,4 +63,14 @@ public class Util : MonoBehaviour
 
 		return spawnPosition;
 	}
+
+    public static int RandomDamage(int damage)
+    {
+        int minDamage = (int)(damage * 0.8f);
+        int maxDamage = (int)(damage * 1.2f);
+
+        damage = Random.Range(minDamage, maxDamage + 1);
+
+        return damage;
+    }
 }
